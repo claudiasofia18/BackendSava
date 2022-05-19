@@ -6,15 +6,6 @@ module.exports = {
         type: Sequelize.STRING,
         primaryKey: true,
       },
-      usuario:{
-        type: Sequelize.STRING,
-        references:{
-          model:'Clientes',
-          key:'usuario'
-        },
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
-      },
       estado: {
         type: Sequelize.STRING
       },
