@@ -2,15 +2,21 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('MedioContactos', {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
+      },
       formaContacto: {
         type: Sequelize.STRING,
-        primaryKey: true,
+        unique:true
       },
       usuario: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         references:{
           model:'Clientes',
-          key:'usuario'
+          key:'id'
         },
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
@@ -19,6 +25,14 @@ module.exports = {
       detalleContacto: {
         type: Sequelize.STRING
       },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      }
     });
   },
   async down(queryInterface, Sequelize) {
