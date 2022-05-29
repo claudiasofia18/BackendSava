@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.belongsTo(models.Persona,{foreignKey:'usuario'})
-      this.hasMany(models.PaqueteSava,{foreignKey:'usuario',targetKey:'usuario'})
-      this.hasMany(models.PaqueteBodega,{targetKey:'usuario',foreignKey:'usuario'})
+      this.hasMany(models.PaqueteSava,{foreignKey:'usuario'})
+      this.hasMany(models.PaqueteBodega,{targetKey:'usuario'})
     }
   }
   Cliente.init({

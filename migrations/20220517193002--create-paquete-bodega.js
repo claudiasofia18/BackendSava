@@ -2,25 +2,31 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('PaqueteBodegas', {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
+      },
       numeroTrackeo: {
         type: Sequelize.STRING,
-        primaryKey:true,
+        unique:true,
         allowNull:false
       },
       usuario:{
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         references:{
           model:'Clientes',
-          key:'usuario'
+          key:'id'
         },
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       },
       codigoSava:{
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         references:{
           model:'PaqueteSavas',
-          key:'CodigoSava'
+          key:'id'
         },
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
@@ -34,6 +40,14 @@ module.exports = {
       foto: {
         type: Sequelize.STRING
       },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      }
     });
   },
   async down(queryInterface, Sequelize) {

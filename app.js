@@ -3,13 +3,12 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var cors = require('cors');
 var logger = require('morgan');
-const db = require('./models/index');
 require("dotenv").config();
-console.log(process.env);
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var paqueteSavaRouter = require('./routes/paqueteSavaRoutes');
+var validate_token = require("./Middleware/validate_token.js");
+var authRouter = require('./routes/authentication.routes')
+var usersRouter = require('./routes/users.routes');
+var paqueteSavaRouter = require('./routes/paquete_sava.routes');
 
 var app = express();
 
@@ -20,9 +19,13 @@ app.use(cookieParser());
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/paqueteSava', paqueteSavaRouter);
+app.use('/auth', authRouter);
+app.use('/users',validate_token, usersRouter);
+app.use('/paqueteSava',validate_token, paqueteSavaRouter);
 
+// Default Handlers for errors
+app.use((err, req, res, next)=> {
+    res.status(500).json({status:500,message: err.message})
+});
 
 module.exports = app;

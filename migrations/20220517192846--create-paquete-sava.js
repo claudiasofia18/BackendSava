@@ -2,9 +2,15 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('PaqueteSavas', {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
+      },
       codigoSava: {
         type: Sequelize.STRING,
-        primaryKey: true,
+        unique:true
       },
       estado: {
         type: Sequelize.STRING
@@ -15,6 +21,14 @@ module.exports = {
       fechaSalida: {
         type: Sequelize.DATE
       },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      }
     });
   },
   async down(queryInterface, Sequelize) {
