@@ -12,12 +12,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.hasMany(models.PaqueteBodega,{foreignKey:'codigoSava'})
-      this.belongsTo(models.Cliente,{foreignKey:'usuario',targetKey:'usuario'})
     }
   }
   PaqueteSava.init({
     codigoSava: DataTypes.STRING,
-    usuario:DataTypes.STRING,
     estado: DataTypes.STRING,
     precio: DataTypes.FLOAT,
     fechaSalida: DataTypes.DATE
