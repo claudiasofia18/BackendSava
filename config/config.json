@@ -7,17 +7,17 @@
     "dialect": "mysql"
   },
   "test": {
-    "username": "root",
-    "password": "Katitos2",
-    "database": "Sava",
-    "host": "127.0.0.1",
+    "username": "admin",
+    "password": "gutsib-pynfoz-4kedxY",
+    "database": "sava",
+    "host": "aws-sava-bd.cvm1tevmaev7.us-east-1.rds.amazonaws.com",
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": "Katitos2",
-    "database": "database_production",
-    "host": "127.0.0.1",
+    "username": "admin",
+    "password": "gutsib-pynfoz-4kedxY",
+    "database": "sava",
+    "host": "aws-sava-bd.cvm1tevmaev7.us-east-1.rds.amazonaws.com",
     "dialect": "mysql"
   }
 }

@@ -2,6 +2,7 @@ const db = require('../models/index');
 const generate_token = require('../Middleware/generate_token.js');
 const {CLIENTE,ADMINISTRADOR} = require('../constants/roles.constants');
 
+
 exports.createClient = async (req,res,next) => {
     try {
         const { correo, password, numeroLista, direccion} = req.body;
@@ -72,7 +73,35 @@ exports.createAdmin = async (req,res,next) => {
                 }
             })
         })
-
+    }catch(err){
+        next(err);
+    }
+}
+exports.CreateContacto= async(req,res,next)=>{
+    try{
+        console.log(req.body)
+        const{forma,correo,detalle}=req.body;
+        console.log(req.body.correo)
+        const result= await db.sequelize.transaction(async(t) => {
+            await db['MedioContacto'].findOrCreate({
+                where:{
+                    usuario:correo,
+                    formaContacto:forma
+                },
+                defaults:{detalleContacto:detalle}
+            })
+            .then((user)=>{
+                    if(user[1]){
+                      return res.status(201).json({
+                        message:"Se ha creado su medio de contacto exitosamente"
+                      })
+                    }else{
+                      return res.status(400).json({
+                        message:"Solo puede tener una forma de contacto con"+forma
+                      })
+                    }
+            })
+        })
     }catch(err){
         next(err);
     }

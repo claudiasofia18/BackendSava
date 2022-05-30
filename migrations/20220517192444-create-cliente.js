@@ -20,7 +20,6 @@ module.exports = {
         allowNull:false,
 
       },
-      
       NumeroLista: {
         type: Sequelize.INTEGER
       },
