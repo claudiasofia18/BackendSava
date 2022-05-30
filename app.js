@@ -6,6 +6,7 @@ var logger = require('morgan');
 require("dotenv").config();
 
 var validate_token = require("./Middleware/validate_token.js");
+
 var authRouter = require('./routes/authentication.routes')
 var usersRouter = require('./routes/users.routes');
 var paqueteSavaRouter = require('./routes/paquete_sava.routes');
@@ -24,7 +25,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
 app.use('/paqueteSava', paqueteSavaRouter);
-app.use('/metodoContacto',metodoContactoRouter)
+app.use('/metodoContacto',metodoContactoRouter);
+
 // Default Handlers for errors
 app.use((err, req, res, next)=> {
     res.status(500).json({status:500,message: err.message})

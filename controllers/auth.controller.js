@@ -5,7 +5,6 @@ exports.findOneLogin = async (req,res,next) => {
     try{
         const {correo,password} = req.body;
         let userLogin; 
-
         if(correo){
             userLogin = await db['Persona'].findOne({
                 where: {
@@ -14,14 +13,13 @@ exports.findOneLogin = async (req,res,next) => {
             });
 
         }
-
         if(!userLogin){
             return res.status(404).json({
                 status: 404,
                 error: "User not found",
             })
         }
-
+        
         const password_valid = password==userLogin.password;
         if (!password_valid) {
             return res.status(401).json({
@@ -49,7 +47,5 @@ exports.findOneLogin = async (req,res,next) => {
         })
     }catch(err){
         next(err);
-    }
-    
-    
+    }   
 }

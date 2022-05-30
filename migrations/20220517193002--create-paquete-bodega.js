@@ -13,6 +13,15 @@ module.exports = {
         unique:true,
         allowNull:false
       },
+      codigoSava:{
+        type: Sequelize.STRING,
+        references:{
+          model:'PaqueteSavas',
+          key:'codigoSava'
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      },
       usuario:{
         type: Sequelize.INTEGER,
         references:{

@@ -18,7 +18,6 @@ module.exports = {
         onUpdate: 'CASCADE',
         unique:true,
         allowNull:false,
-
       },
       NumeroLista: {
         type: Sequelize.INTEGER
