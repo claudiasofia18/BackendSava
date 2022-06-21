@@ -20,3 +20,22 @@ exports.generate_token = (user) => {
   }
   
 };
+
+exports.generate_login_token = (user) => {
+  try{
+    const token = jwt.sign(
+      {
+        id: user.id,
+        correo: user.correo,
+        rol: user.rol
+      },
+      tokenPassword.TOKEN_SECRET,
+      {
+        expiresIn: "24h",
+      }
+    );
+    return token;
+  }catch(err){
+    next(err);
+  }
+};

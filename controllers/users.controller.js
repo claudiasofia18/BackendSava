@@ -6,8 +6,17 @@ const {CLIENTE,ADMINISTRADOR} = require('../constants/roles.constants');
 exports.createClient = async (req,res,next) => {
     try {
         const { correo, password, numeroLista, direccion} = req.body;
-        console.log(correo)
         const result = await db.sequelize.transaction(async (t) => {
+
+            let findPerson = await db['Persona'].findOne({
+                where:{
+                    correo:correo
+                }
+            });
+
+            if (findPerson != null) {
+                return res.json({message: 'Usuario ya registrado'}).status(204);
+            }
             
             let newPerson = await db['Persona'].create({
                 password:password,
@@ -21,27 +30,16 @@ exports.createClient = async (req,res,next) => {
                 usuario: newPerson.id
             },{transaction: t})
 
-            console.log(newClient)
-
             const token = await generate_token.generate_token(newPerson);
             await db['Persona'].update({
                 token:token
             },{transaction:t, where: {correo: newPerson.correo}})
 
-            return res.status(201).json({
-                status: 201,
-                payload: {
-                    person: {
-                        correo: newPerson.correo,
-                        password: newPerson.password
-                    },
-                    token: token
-                }
-            })
+            return res.json({message: 'Creacion completa'}).status(201);
         })
 
     }catch(err){
-        next(err);
+        next(err)
     }
 }
 
@@ -104,5 +102,36 @@ exports.CreateContacto= async(req,res,next)=>{
         })
     }catch(err){
         next(err);
+    }
+}
+exports.postUser= async(req,res,next)=>{
+    try {
+        const { correo, password} = req.body;
+        let user = await db['Persona'].findOne({
+            where:{
+                correo:correo,
+                password:password
+            }
+        });
+
+        const token = await generate_token.generate_login_token(user);
+        await db['Persona'].update({
+            token:token
+        },{ where: {correo: user.correo}})
+
+        return res.json({token}).status(202);
+    }catch(err){
+        const { correo, password} = req.body;
+        let user = await db['Persona'].findOne({
+            where:{
+                correo:correo
+            }
+        });
+
+        if (user == null) {
+            return res.json({message: 'Usuario no existe'}).status(204);
+        }
+
+        return res.json({token: 'error', message: 'Credenciales no coinciden'}).status(204);
     }
 }
