@@ -1,19 +1,40 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('PaqueteBodegas', {
+    await queryInterface.createTable('WarehousePackages', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      numeroTrackeo: {
+      tracking_number: {
         type: Sequelize.STRING,
         unique:true,
         allowNull:false
       },
-      codigoSava:{
+      client_name: {
+        type: Sequelize.STRING,
+      },
+      status: {
+        type: Sequelize.STRING,
+      },
+      pounds: {
+        type: Sequelize.STRING,
+      },
+      price: {
+        type: Sequelize.STRING,
+      },
+      departure_date: {
+        type: Sequelize.DATE,
+      },
+      arrival_date_destiny: {
+        type: Sequelize.DATE,
+      },
+      arrival_date_warehouse: {
+        type: Sequelize.DATE,
+      },
+      sava_code:{
         type: Sequelize.STRING,
         references:{
           model:'PaqueteSavas',
@@ -22,22 +43,7 @@ module.exports = {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       },
-      usuario:{
-        type: Sequelize.INTEGER,
-        references:{
-          model:'Clientes',
-          key:'id'
-        },
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
-      },
-      fechaLLegada: {
-        type: Sequelize.DATE
-      },
-      peso: {
-        type: Sequelize.FLOAT
-      },
-      foto: {
+      images: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -51,6 +57,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('PaqueteBodegas');
+    await queryInterface.dropTable('WarehousePackages');
   }
 };

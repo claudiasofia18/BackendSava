@@ -2,7 +2,6 @@
 const {
   Model
 } = require('sequelize');
-const paquetebodega = require('./paquetebodega');
 module.exports = (sequelize, DataTypes) => {
   class PaqueteSava extends Model {
     /**
@@ -11,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      this.hasMany(models.PaqueteBodega,{foreignKey:'codigoSava'})
+      this.hasMany(models.WarehousePackage,{foreignKey:'sava_code'})
       this.belongsTo(models.Cliente,{foreignKey:'usuario'})
     }
   }
