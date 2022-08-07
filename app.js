@@ -12,6 +12,7 @@ var usersRouter = require('./routes/users.routes');
 var paqueteSavaRouter = require('./routes/paquete_sava.routes');
 var warehousePackageRouter = require('./routes/warehouse_packages.routes');
 var metodoContactoRouter = require('./routes/metodoContacto.routes');
+var dashboardRouter = require('./routes/dashboard.routes')
 
 var app = express();
 
@@ -33,6 +34,7 @@ app.use('/users', usersRouter);
 app.use('/paqueteSava', paqueteSavaRouter);
 app.use('/api', warehousePackageRouter);
 app.use('/metodoContacto',metodoContactoRouter);
+app.use('/dashboard',dashboardRouter)
 
 // Default Handlers for errors
 app.use((err, req, res, next)=> {

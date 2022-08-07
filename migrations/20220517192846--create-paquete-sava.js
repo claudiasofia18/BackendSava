@@ -21,6 +21,15 @@ module.exports = {
       fechaSalida: {
         type: Sequelize.DATE
       },
+      usuario: {
+        type: Sequelize.INTEGER,
+        references:{
+          model:'Clientes',
+          key:'id'
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

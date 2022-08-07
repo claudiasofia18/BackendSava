@@ -42,6 +42,7 @@ module.exports = {
         },
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
+        allowNull: true
       },
       images: {
         type: Sequelize.STRING
