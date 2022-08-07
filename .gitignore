@@ -43,3 +43,7 @@ Thumbs.db
 
 # Dependencias
 node_modules
+
+
+#port
+www

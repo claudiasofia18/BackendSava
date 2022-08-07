@@ -10,6 +10,7 @@ var validate_token = require("./Middleware/validate_token.js");
 var authRouter = require('./routes/authentication.routes')
 var usersRouter = require('./routes/users.routes');
 var paqueteSavaRouter = require('./routes/paquete_sava.routes');
+var warehousePackageRouter = require('./routes/warehouse_packages.routes');
 var metodoContactoRouter = require('./routes/metodoContacto.routes');
 
 var app = express();
@@ -30,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
 app.use('/paqueteSava', paqueteSavaRouter);
+app.use('/api', warehousePackageRouter);
 app.use('/metodoContacto',metodoContactoRouter);
 
 // Default Handlers for errors
