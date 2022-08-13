@@ -1,4 +1,5 @@
 const db = require('../models/index');
+const jwt = require("jsonwebtoken");
 
 exports.list = async (req, res, next) => {
     try {
@@ -6,6 +7,26 @@ exports.list = async (req, res, next) => {
         console.log(paquetes);
         return res.status(200).json(paquetes);
     } catch (err) {
+        next(err);
+    }
+}
+
+exports.showByUser = async (req, res, next) => {
+    try {
+        usuario=jwt.decode(req.header("Authorization"))
+        var id=usuario["id"]
+        db.WarehousePackage.findAll({
+            where: {
+                ClientId:id,
+                sava_code:null
+            },
+        })
+        .then(paquetes=>{
+            console.log(paquetes)
+            return res.status(200).json(paquetes);
+        })
+    }catch (err) {
+        console.log(err)
         next(err);
     }
 }

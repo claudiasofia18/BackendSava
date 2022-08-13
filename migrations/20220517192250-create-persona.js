@@ -1,14 +1,15 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Personas', {
+    await queryInterface.createTable('Users', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      correo: {
+
+      username: {
         type: Sequelize.STRING,
         unique: true,
         allowNull:false
@@ -17,10 +18,11 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull:false
       },
-      rol: {
+      role: {
         type: Sequelize.STRING,
         allowNull:false
       },
+      
       token: {
         type: Sequelize.STRING
       },
@@ -35,6 +37,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Personas');
+    await queryInterface.dropTable('Users');
   }
 };

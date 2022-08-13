@@ -2,7 +2,7 @@ const db = require('../models/index');
 
 exports.list = async (req, res, next) => {
     try {
-        let paquetes = await db.PaqueteSava.findAll({attributes: { exclude: ["id", "usuario", "updatedAt","createdAt"]}});
+        let paquetes = await db.SavaPackage.findAll({attributes: { exclude: ["id", "usuario", "updatedAt","createdAt"]}});
         console.log(paquetes);
         return res.status(200).json(paquetes);
     }catch (err) {
@@ -12,9 +12,9 @@ exports.list = async (req, res, next) => {
 exports.ModEstado=async(req,res,next)=>{
     try{
         const{estado,codigoSava}=req.body;
-        await db['PaqueteSava'].update({estado:estado},{
+        await db['SavaPackage'].update({estado:estado},{
         where:{
-            codigoSava:codigoSava,
+            sava_code:codigoSava,
         }
     }) 
     return res.status(200).json( {message:"Se ha modificado exitosamente"})

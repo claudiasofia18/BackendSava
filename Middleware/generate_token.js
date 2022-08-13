@@ -7,7 +7,7 @@ exports.generate_token = (user) => {
     const token = jwt.sign(
       {
         id:user.id,
-        correo: user.correo,
+        username: user.username,
       },
       tokenPassword.TOKEN_SECRET,
       {
@@ -26,8 +26,8 @@ exports.generate_login_token = (user) => {
     const token = jwt.sign(
       {
         id: user.id,
-        correo: user.correo,
-        rol: user.rol
+        username: user.username,
+        role: user.role
       },
       tokenPassword.TOKEN_SECRET,
       {

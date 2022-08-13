@@ -1,5 +1,5 @@
 const db = require('../models/index');
-const generate_token = require('../Middleware/generate_token.js');
+const generate_token = require('../Middleware/generate_token');
 const {CLIENTE,ADMINISTRADOR} = require('../constants/roles.constants');
 
 
@@ -7,37 +7,32 @@ exports.createClient = async (req,res,next) => {
     try {
         const { correo, password, numeroLista, direccion} = req.body;
         const result = await db.sequelize.transaction(async (t) => {
-
-            let findPerson = await db['Persona'].findOne({
+            let findPerson = await db['User'].findOne({
                 where:{
-                    correo:correo
+                    username:correo
                 }
             });
-
+            console.log(findPerson)
             if (findPerson != null) {
                 return res.json({message: 'Usuario ya registrado'}).status(204);
             }
-            
-            let newPerson = await db['Persona'].create({
+            let newPerson = await db['User'].create({
                 password:password,
-                rol: CLIENTE,
-                correo: correo
+                role: CLIENTE,
+                username: correo
             },{transaction: t})
-
-            let newClient = await db['Cliente'].create({
-                NumeroLista: numeroLista,
-                direccion: direccion,
-                usuario: newPerson.id
+            let newClient = await db['Client'].create({
+                username: newPerson.id,
             },{transaction: t})
-
+            console.log(newClient)
             const token = await generate_token.generate_token(newPerson);
-            await db['Persona'].update({
+            console.log(token)
+            await db['User'].update({
                 token:token
-            },{transaction:t, where: {correo: newPerson.correo}})
+            },{transaction:t, where: {username: newPerson.username}})
 
             return res.json({message: 'Creacion completa'}).status(201);
         })
-
     }catch(err){
         next(err)
     }
@@ -49,14 +44,14 @@ exports.createAdmin = async (req,res,next) => {
         console.log(correo)
         const result = await db.sequelize.transaction(async (t) => {
             
-            let newPerson = await db['Persona'].create({
+            let newPerson = await db['User'].create({
                 password:password,
-                rol: ADMINISTRADOR,
-                correo: correo
+                role: ADMINISTRADOR,
+                username: correo
             },{transaction: t})
 
             const token = await generate_token.generate_token(newPerson);
-            await db['Persona'].update({
+            await db['User'].update({
                 token:token
             },{transaction:t, where: {correo: newPerson.correo}})
 
@@ -64,7 +59,7 @@ exports.createAdmin = async (req,res,next) => {
                 status: 201,
                 payload: {
                     person: {
-                        correo: newPerson.correo,
+                        correo: newPerson.username,
                         password: newPerson.password
                     },
                     token: token
@@ -81,12 +76,12 @@ exports.CreateContacto= async(req,res,next)=>{
         const{forma,correo,detalle}=req.body;
         console.log(req.body.correo)
         const result= await db.sequelize.transaction(async(t) => {
-            await db['MedioContacto'].findOrCreate({
+            await db['ContactMedia'].findOrCreate({
                 where:{
-                    usuario:correo,
-                    formaContacto:forma
+                    username:correo,
+                    wayTocontact:forma
                 },
-                defaults:{detalleContacto:detalle}
+                defaults:{details:detalle}
             })
             .then((user)=>{
                     if(user[1]){
@@ -107,24 +102,25 @@ exports.CreateContacto= async(req,res,next)=>{
 exports.postUser= async(req,res,next)=>{
     try {
         const { correo, password} = req.body;
-        let user = await db['Persona'].findOne({
+        let user = await db['User'].findOne({
             where:{
-                correo:correo,
+                username:correo,
                 password:password
             }
         });
 
+
         const token = await generate_token.generate_login_token(user);
-        await db['Persona'].update({
+        await db['User'].update({
             token:token
-        },{ where: {correo: user.correo}})
+        },{ where: {username: user.username}})
 
         return res.json({token}).status(202);
     }catch(err){
         const { correo, password} = req.body;
-        let user = await db['Persona'].findOne({
+        let user = await db['User'].findOne({
             where:{
-                correo:correo
+                username:correo
             }
         });
 

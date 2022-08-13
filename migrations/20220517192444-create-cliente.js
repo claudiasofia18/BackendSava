@@ -1,17 +1,17 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Clientes', {
+    await queryInterface.createTable('Clients', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      usuario: {
+      username: {
         type: Sequelize.INTEGER,
         references:{
-          model:'Personas',
+          model:'Users',
           key:'id'
         },
         onDelete: 'CASCADE',
@@ -19,11 +19,9 @@ module.exports = {
         unique:true,
         allowNull:false,
       },
-      NumeroLista: {
-        type: Sequelize.INTEGER
-      },
-      direccion: {
-        type: Sequelize.STRING
+      sentPackages:{
+        type:Sequelize.INTEGER,
+        defaultValue: 0,
       },
       createdAt: {
         allowNull: false,
@@ -36,6 +34,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Clientes');
+    await queryInterface.dropTable('Clients');
   }
 };

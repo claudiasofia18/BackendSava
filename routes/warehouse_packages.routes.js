@@ -4,6 +4,7 @@ var WarehousePackageController = require('../controllers/warehouse_package.contr
 
 router.get('/warehouse-packages', WarehousePackageController.list);
 router.post('/warehouse-packages', WarehousePackageController.createPackage);
+router.get('/warehouse-packages/User', WarehousePackageController.showByUser);
 router.put('/warehouse-packages/:id',WarehousePackageController.updatePackage);
 router.post('/warehouse-packages/:id', WarehousePackageController.deletePackage);
 

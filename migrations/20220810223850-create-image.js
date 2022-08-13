@@ -1,37 +1,25 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('SavaPackages', {
+    await queryInterface.createTable('images', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      sava_code: {
+      tracking_number: {
         type: Sequelize.STRING,
-        unique:true
-      },
-      status: {
-        type: Sequelize.STRING
-      },
-      price: {
-        type: Sequelize.FLOAT
-      },
-      departureDate: {
-        type: Sequelize.DATE
-      },
-      arrival_date_destiny: {
-        type: Sequelize.DATE,
-      },
-      username: {
-        type: Sequelize.INTEGER,
         references:{
-          model:'Clients',
-          key:'id'
+          model:'WarehousePackages',
+          key:'tracking_number'
         },
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
+        allowNull:false
+      },
+      source: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -44,6 +32,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('SavaPackages');
+    await queryInterface.dropTable('images');
   }
 };

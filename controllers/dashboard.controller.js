@@ -6,7 +6,7 @@ const { Sequelize } = require('../models/index');
 exports.delivered_packages = async (req,res,next) => {
     try{
         let now = moment()
-        let packagesMonthBefore = await db['PaqueteSava'].count({
+        let packagesMonthBefore = await db['SavaPackage'].count({
             where:{
                 estado: "Entregado",
                 updatedAt:{
@@ -16,7 +16,7 @@ exports.delivered_packages = async (req,res,next) => {
             }
         })
 
-        let packagesActualMonth = await db['PaqueteSava'].count({
+        let packagesActualMonth = await db['SavaPackage'].count({
             where:{
                 estado: "Entregado",
                 updatedAt:{
@@ -47,7 +47,7 @@ exports.total_packages = async (req,res,next) => {
         var months = {}
         
         for (const x of Array(5).keys()){
-            let packages = await db.PaqueteSava.count({
+            let packages = await db.SavaPackage.count({
                 where:{
                     estado: "Entregado",
                     [Op.and]: [
@@ -68,7 +68,7 @@ exports.total_packages = async (req,res,next) => {
 exports.total_clients = async (req,res,next) => {
     try{
         let now = moment()
-        let newClientsMonthBefore = await db['Cliente'].count({
+        let newClientsMonthBefore = await db['Client'].count({
             where:{
                 createdAt:{
                     [Op.lte]: now.clone().subtract(30,'d').toDate(),
@@ -77,7 +77,7 @@ exports.total_clients = async (req,res,next) => {
             }
         })
 
-        let newClientsActualMonth = await db['Cliente'].count({
+        let newClientsActualMonth = await db['Client'].count({
             where:{
                 createdAt:{
                     [Op.lte]: now.toDate(),

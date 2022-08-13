@@ -5,9 +5,9 @@ exports.CreateContacto= async(req,res,next)=>{
         const{forma,correo,detalle}=req.body;
         console.log(req.body.correo)
         const result= await db.sequelize.transaction(async(t) => {
-            await db['MedioContacto'].findOrCreate({
+            await db['ContactMedia'].findOrCreate({
                 where:{
-                    usuario:correo,
+                    user:correo,
                     formaContacto:forma
                 },
                 defaults:{detalleContacto:detalle}

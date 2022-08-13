@@ -3,23 +3,23 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class MedioContacto extends Model {
+  class ContactMedia extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      this.belongsTo(models.Cliente,{foreignKey:'usuario'})
+      this.belongsTo(models.Client,{foreignKey:'username'})
     }
   }
-  MedioContacto.init({
-    formaContacto: DataTypes.STRING,
-    usuario: DataTypes.STRING,
-    detalleContacto: DataTypes.STRING
+  ContactMedia.init({
+    wayTocontact: DataTypes.STRING,
+    username: DataTypes.STRING,
+    details:DataTypes.STRING,
   }, {
     sequelize,
-    modelName: 'MedioContacto',
+    modelName: 'ContactMedia',
   });
-  return MedioContacto;
+  return ContactMedia;
 };

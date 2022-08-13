@@ -13,11 +13,14 @@ module.exports = {
         unique:true,
         allowNull:false
       },
-      client_name: {
-        type: Sequelize.STRING,
-      },
-      status: {
-        type: Sequelize.STRING,
+      ClientId:{
+        type: Sequelize.INTEGER,
+        references:{
+          model:'Clients',
+          key:'username'
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       },
       pounds: {
         type: Sequelize.STRING,
@@ -25,27 +28,18 @@ module.exports = {
       price: {
         type: Sequelize.STRING,
       },
-      departure_date: {
-        type: Sequelize.DATE,
-      },
-      arrival_date_destiny: {
-        type: Sequelize.DATE,
-      },
-      arrival_date_warehouse: {
-        type: Sequelize.DATE,
+      arrival_date: {
+        type: Sequelize.DATEONLY,
       },
       sava_code:{
         type: Sequelize.STRING,
         references:{
-          model:'PaqueteSavas',
-          key:'codigoSava'
+          model:'SavaPackages',
+          key:'sava_code'
         },
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
         allowNull: true
-      },
-      images: {
-        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

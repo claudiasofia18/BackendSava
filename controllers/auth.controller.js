@@ -6,9 +6,9 @@ exports.findOneLogin = async (req,res,next) => {
         const {correo,password} = req.body;
         let userLogin; 
         if(correo){
-            userLogin = await db['Persona'].findOne({
+            userLogin = await db['User'].findOne({
                 where: {
-                    correo: correo
+                    username: correo
                 }
             });
 
@@ -29,7 +29,7 @@ exports.findOneLogin = async (req,res,next) => {
         }
 
         const token = await generate_token.generate_token(userLogin);
-        await db['Persona'].update({
+        await db['User'].update({
             Token: token
         },{
             where: {
