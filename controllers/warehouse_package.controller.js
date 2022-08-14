@@ -1,6 +1,6 @@
 const db = require('../models/index');
 const jwt = require("jsonwebtoken");
-
+const generator = require('../helpers/create_sava')
 exports.list = async (req, res, next) => {
     try {
         let paquetes = await db.PaqueteSava.findAll({ attributes: { exclude: ["id", "usuario", "updatedAt", "createdAt"] } });
@@ -22,7 +22,6 @@ exports.showByUser = async (req, res, next) => {
             },
         })
         .then(paquetes=>{
-            console.log(paquetes)
             return res.status(200).json(paquetes);
         })
     }catch (err) {
@@ -30,7 +29,37 @@ exports.showByUser = async (req, res, next) => {
         next(err);
     }
 }
-
+exports.creationSava=async (req, res, next) => {
+    try{
+        trackingNumber=req.body.packages
+        db.WarehousePackage.findAll({
+            include: db.Client,
+            where: {
+                tracking_number:trackingNumber
+            }
+        }).then(packages=>{
+            client=packages[0].Client
+            package_sent=client.sentPackages
+            client.sentPackages=client.sentPackages+1
+            client.save()
+            savaCode=generator.generateSavaCode(package_sent,packages[0].ClientId)
+            savaCreated=db.SavaPackage.create({
+                username: packages[0].ClientId,
+                sava_code: savaCode,
+                status: 'En bodega',
+            }).then(sava=>{
+                for(var package of packages){
+                    package.sava_code=savaCode
+                    package.save()
+                }
+                console.log(sava)
+                return res.status(200).json(sava);
+            })
+        })
+    }catch (err) {
+        next(err);
+    }
+}
 exports.createPackage = async (req, res, next) => {
     try {
         const {
