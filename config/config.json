@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "root",
-    "password": "",
-    "database": "Sava",
-    "host": "127.0.0.1",
+    "username": "admin",
+    "password": "gutsib-pynfoz-4kedxY",
+    "database": "sava",
+    "host": "aws-sava-bd.cvm1tevmaev7.us-east-1.rds.amazonaws.com",
     "dialect": "mysql"
   },
   "test": {

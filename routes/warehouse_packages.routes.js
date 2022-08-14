@@ -6,6 +6,6 @@ router.get('/warehouse-packages', WarehousePackageController.list);
 router.post('/warehouse-packages', WarehousePackageController.createPackage);
 router.get('/warehouse-packages/User', WarehousePackageController.showByUser);
 router.put('/warehouse-packages/:id',WarehousePackageController.updatePackage);
-router.post('/warehouse-packages/:id', WarehousePackageController.deletePackage);
+router.delete('/warehouse-packages/:id', WarehousePackageController.deletePackage);
 
 module.exports = router;

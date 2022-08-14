@@ -45,7 +45,7 @@ exports.createPackage = async (req, res, next) => {
             sava_code,
             images
         } = req.body;
-        await db['WarehouseTable'].create({
+        await db['WarehousePackage'].create({
             tracking_number: tracking_number,
             client_name: client_name,
             status: status,

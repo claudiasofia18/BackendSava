@@ -9,6 +9,7 @@ exports.list = async (req, res, next) => {
         next(err);
     }
 }
+
 exports.ModEstado=async(req,res,next)=>{
     try{
         const{estado,codigoSava}=req.body;
