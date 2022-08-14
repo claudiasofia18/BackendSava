@@ -8,4 +8,7 @@ router.get('/warehouse-packages/User', WarehousePackageController.showByUser);
 router.put('/warehouse-packages/:id',WarehousePackageController.updatePackage);
 router.delete('/warehouse-packages/:id', WarehousePackageController.deletePackage);
 
+router.post('/warehouse/sava', WarehousePackageController.creationSava);
+
 module.exports = router;
+
